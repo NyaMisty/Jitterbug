@@ -30,7 +30,7 @@ jobs:
           submodules: recursive
       - name: Build
         run: |
-          xcodebuild archive -archivePath Jitterbug -scheme Jitterbug -configuration Release CODE_SIGNING_ALLOWED=NO
+          xcodebuild archive -archivePath Jitterbug -scheme Jitterbug -configuration Debug CODE_SIGNING_ALLOWED=NO
           codesign --force --sign - --timestamp=none --preserve-metadata=identifier,entitlements,flags "Jitterbug.xcarchive/Products/Applications/Jitterbug.app/PlugIns/OpenSSL.framework"
           codesign --force --sign - --timestamp=none --preserve-metadata=identifier,entitlements,flags "Jitterbug.xcarchive/Products/Applications/Jitterbug.app/Frameworks/OpenSSL.framework"
           codesign --force --sign - --entitlements "JitterbugTunnel/JitterbugTunnel.entitlements" --timestamp=none "Jitterbug.xcarchive/Products/Applications/Jitterbug.app/PlugIns/JitterbugTunnel.appex"
@@ -51,7 +51,7 @@ jobs:
         with:
           submodules: recursive
       - name: Build
-        run: xcodebuild archive -archivePath JitterbugLite -scheme JitterbugLite -configuration Release CODE_SIGNING_ALLOWED=NO
+        run: xcodebuild archive -archivePath JitterbugLite -scheme JitterbugLite -configuration Debug CODE_SIGNING_ALLOWED=NO
       - name: Compress
         run: tar cf JitterbugLite.xcarchive.tgz JitterbugLite.xcarchive
       - name: Upload
@@ -68,7 +68,7 @@ jobs:
         with:
           submodules: recursive
       - name: Build
-        run: xcodebuild archive -archivePath JitterbugMac -scheme JitterbugMac -configuration Release
+        run: xcodebuild archive -archivePath JitterbugMac -scheme JitterbugMac -configuration Debug
       - name: Compress
         run: tar cf JitterbugMac.xcarchive.tgz JitterbugMac.xcarchive
       - name: Upload
@@ -87,7 +87,7 @@ jobs:
       - name: Dependencies
         run: brew install meson openssl@1.1 libusbmuxd libimobiledevice
       - name: Build
-        run: meson --prefix /usr/local --buildtype=release build && cd build && meson compile
+        run: meson --prefix /usr/local --buildtype=debug build && cd build && meson compile
         env:
           PKG_CONFIG_PATH: /usr/local/opt/openssl@1.1/lib/pkgconfig
       - name: Upload
@@ -106,7 +106,7 @@ jobs:
       - name: Dependencies
         run: sudo apt install meson libgcrypt-dev libusbmuxd-dev libimobiledevice-dev libunistring-dev
       - name: Build
-        run: meson --prefix /usr --buildtype=release build && cd build && ninja
+        run: meson --prefix /usr --buildtype=debug build && cd build && ninja
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
@@ -129,7 +129,7 @@ jobs:
         with:
           submodules: recursive
       - name: Build
-        run: msys2 -c 'meson --buildtype=release build && cd build && meson compile'
+        run: msys2 -c 'meson --buildtype=debug build && cd build && meson compile'
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
