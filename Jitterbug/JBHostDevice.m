@@ -732,7 +732,7 @@ cleanup:
     assert(self.udid);
     assert(self.lockdown);
     
-    if (self.isUsbDevice) {
+    if (false && self.isUsbDevice) {
         lerr = lockdownd_set_value(self.lockdown, "com.apple.mobile.wireless_lockdown", "EnableWifiDebugging", plist_new_bool(1));
         if (lerr != LOCKDOWN_E_SUCCESS) {
             if (lerr == LOCKDOWN_E_UNKNOWN_ERROR) {
